@@ -1,0 +1,41 @@
+﻿@model bindingJSON.Models.Customer
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <script src="~/Scripts/jquery-2.1.4.min.js"></script>
+    <script src="~/Scripts/main.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            alert("Loaded...");
+            debugger
+            // when the DOM is fully loaded...
+            $("#btnSubmit").bind("click", function () {
+                var onEventLaunchCustomer = new postCustomer();
+                onEventLaunchCustomer.launchCustomer();
+            });
+        });
+    </script>
+
+</head>
+<body>
+    <div>
+        <p><input type="text" required="required" id="FirstName" placeholder="Enter the first name" /></p>
+        <p><input type="text" required="required" id="LastName" placeholder="Enter the last name" /></p>
+        <p><input type="number" id="Age" placeholder="Customer's age (optional)" /></p>
+        <p><input type="text" required="required" id="Gender" placeholder="M or F? (single letter only)" size="1" /></p>        
+        <p><input type="text" required="required" id="Hobby" placeholder="Any hobby?" /></p>
+        
+        <p><input id="btnSubmit" type="button" value="Save customer" /></p>
+
+        <div id="status"></div>
+    </div>
+</body>
+</html>
