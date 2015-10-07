@@ -1,0 +1,50 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<script src="~/Scripts/jquery-2.1.4.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        debugger;
+        $("#btnGet").on("click", function () {
+            $.ajax({
+                url: "http://localhost:8292/api/EmployerInfoAPI/2",
+                type: "GET"
+            }).done(function (resp) {
+                alert("EmpNo" + resp.EmpNo + " EmpName " + resp.EmpName);
+            }).error(function (xhr, textStatus, errorThrown) {
+                alert("Error: " + textStatus + " " + errorThrown)
+            });
+        });
+        $("#btnSave").on("click", function () {
+            var Emp = {};
+            Emp.EmpName = "MM";
+            Emp.DeptName = "SYS";
+            Emp.Designation = "MGR";
+
+            $.ajax({
+                url: "http://localhost:8292/api/EmployerInfoAPI/",
+                type: "POST",
+                data: Emp,
+                datatype: "json",
+                contenttype: "application/json;utf-8"
+            }).done(function (resp) { alert("Record added " + resp.EmpNo); })
+                .error(function (xhr, textStatus, errorThrown) {
+                    alert("Error " + errorThrown);
+                });
+        });
+    });
+</script>
+
+<h2>Index</h2>
+<table class="table table-bordered table-striped">
+    <tr>
+        <td>Click here to retrieve the Employee</td>
+        <td><input type="button" id="btnGet" value="GET" /></td>
+    </tr>
+    <tr>
+        <td>Click here to save the Employee</td>
+        <td><input type="button" id="btnSave" value="POST" /></td>
+    </tr>
+</table>
+
