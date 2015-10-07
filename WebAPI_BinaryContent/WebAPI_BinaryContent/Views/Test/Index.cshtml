@@ -1,0 +1,68 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/bootstrap-theme.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-2.1.4.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<iframe style="visibility:hidden; display:none;" src="http://tpc.googlesyndication.com/safeframe/1-0-2/html/container.html"></iframe>
+<script src="~/Scripts/knockout-3.3.0.js"></script>
+
+
+<table class="table table-bordered table-striped">
+    <tbody>
+        <tr>
+            <td>
+                <table class=" table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <td>File Name</td>
+                        </tr>
+                    </thead>
+                    <tbody data-bind="foreach:Files">
+                        <tr data-bind="click:$root.selectFile">
+                            <td data-bind="text:FileName"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+            <td>
+                <img data-bind="attr:{'src':imagePath}" class="img-rounded" style="height:400px;width:400px" alt="my image">
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<script type="text/javascript">
+    // the view model
+    var vm = function () {
+        var self = this;
+        self.Files = ko.observableArray([]);
+        self.Message = ko.observable("");
+        self.imagePath = ko.observable("");
+
+        loadFiles();
+
+        function loadFiles() {
+            $.ajax({
+                url: "http://localhost:9176/Files",
+                type:"GET"
+            }).done(function (resp) {
+                self.Files(resp)
+            }).error(function (err) {
+                self.Message("Error " + err.status);
+            })
+        }
+
+        // function gets executed when
+        self.selectFile = function (fileName) {
+            //debugger;
+            var names = fileName.FileName.split('.');
+            self.imagePath("http://localhost:9176/Bytes/" + names[0] + "/" + names[1]);
+        }
+    };
+    ko.applyBindings(new vm());
+</script>
