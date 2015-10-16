@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>HTML-5 GeoLocation API Test</title>
+    <script src="Scripts/jquery-2.1.4.min.js"></script>
+    <script src="Scripts/modernizr-2.8.3.js"></script>
+</head>
+<body>
+    Latitude - <p id="lati"></p>
+    Longitude - <p id="longi"></p>
+    <input type="button" name="btnFindLoc" id="btnFindLoc" value="Find My Current Location" />
+    <a id="gMap" href="">Show on Bing Map</a>
+    <div id="errDiv"></div>
+
+    <script>
+        $(function () {
+            var error = $('errDiv');
+            $('#btnFindLoc').click(function () {
+                if (Modernizr.geolocation) {
+                    navigator.geolocation.getCurrentPosition(currentPosition, positionError);
+                }
+                else {
+                    error.html("Geolocation API of Html 5 is not supported");
+                }
+            });
+        });
+
+        function currentPosition(currentPos) {
+            var coordinates = currentPos.coords;
+            $("#lati").text(coordinates.latitude);
+            $("#longi").text(coordinates.longitude);
+            var googleMap = $("#gMap");
+            googleMap.attr("href", "http://maps.google.com/maps?q=" + coordinates.latitude + "," + coordinates.longitude);
+        }
+
+        function positionError(errCode) {
+            switch (errCode.code) {
+                case 0:
+                    error.html("Unknown Error - has occured");
+                    break;
+                case 1:
+                    error.html("Permission Denied - By the user");
+                    break;
+                case 2:
+                    error.html("Position/Location Unavailable");
+                    break;
+                case 3:
+                    error.html("Timeout");
+                    break;
+            }
+        }
+    </script>
+</body>
+</html>

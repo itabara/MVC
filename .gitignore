@@ -3,3 +3,5 @@ MVC_ClientWebAPI/APIService/obj/
 MVC_ClientWebAPI/MVC_Client/bin/
 MVC_ClientWebAPI/MVC_Client/obj/
 MVC_ClientWebAPI/packages/
+GeoLocation/GeolocationAPI/obj/
+GeoLocation/packages/
